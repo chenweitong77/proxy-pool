@@ -8,10 +8,12 @@ import random
 
 import config
 
+
 # 打印日志函数
 def PrintLog(log_str):
     time_ = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    print('[%s]: %s' % (time_, log_str))
+    print('[%s] %s' % (time_, log_str))
+
 
 # 创建请求Headers
 # Usage:
@@ -23,6 +25,6 @@ class HeadersBuilder(object):
 
     def build(self):
         headers = dict()
-        idx = random.randint(0, len(self.user_agents)-1)
+        idx = random.randint(0, len(self.user_agents) - 1)
         headers['User-Agent'] = self.user_agents[idx]
         return headers
