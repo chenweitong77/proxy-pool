@@ -19,12 +19,24 @@ class VaildProxyInspector(object):
         headers = self.headers_builder.build()
         proxies = {'http': 'http://%s:%s' % (ip, post)}
         try:
-            r = requests.get(self.test_url, headers=headers,
-                             proxies=proxies, timeout=self.timeout)
+            r = requests.get(self.test_url,
+                             headers=headers,
+                             proxies=proxies,
+                             timeout=self.timeout)
             if r.status_code == 200:
+                PrintLog("%s:%s 可用！" % (ip, post))
                 return True
         except Exception:
             return False
+
+    def check_list(self, proxy_list):
+        valid_proxy_list = list()
+        for proxy_node in proxy_list:
+            ip, port = proxy_node.split(':')
+            if self.check(ip, port):
+                valid_proxy_list.append(proxy_node)
+
+        return valid_proxy_list
 
 
 if __name__ == '__main__':
