@@ -28,3 +28,37 @@ class HeadersBuilder(object):
         idx = random.randint(0, len(self.user_agents) - 1)
         headers['User-Agent'] = self.user_agents[idx]
         return headers
+
+
+# 文件管理，读写文件
+class FileController(object):
+    def read_file_with_split(self,
+                             file_path,
+                             split_str='\t',
+                             split_size=None,
+                             max_split_size=None,
+                             min_split_size=None):
+        result_list = list()
+        with open(file_path) as stream:
+            for line in stream:
+                fields = line.strip().split(split_str)
+                if split_size and len(fields) != split_size:
+                    continue
+                elif max_split_size and len(fields) > max_split_size:
+                    continue
+                elif min_split_size and len(fields) < min_split_size:
+                    continue
+                result_list.append(fields)
+        return result_list
+
+    def write_list_to_file(self, output_list, file_path, split_str='\t'):
+        exist_list = list()
+        with open(file_path, 'w+') as f:
+            for sub_list in output_list:
+                if sub_list in exist_list:
+                    continue
+
+                output_str = split_str.join(sub_list)
+                output_str += "\n"
+                f.write(output_str)
+                exist_list.append(sub_list)

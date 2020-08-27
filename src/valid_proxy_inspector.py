@@ -34,7 +34,7 @@ class VaildProxyInspector(object):
         for proxy_node in proxy_list:
             ip, port = proxy_node.split(':')
             if self.check(ip, port):
-                valid_proxy_list.append(proxy_node)
+                valid_proxy_list.append(proxy_node.split(':'))
 
         return valid_proxy_list
 
